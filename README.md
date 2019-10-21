@@ -28,10 +28,11 @@ It's possible to customize the `tab label's` by passing the label string through
 ### Full Width Tab  
 If you want jsutify the tab for fill screen; you can call `fullWidth` method on the `Tab::class` 
 
-####Attention 1: you can add any `field` and `relation-field` into the tab. 
-####Attention 2: it's impossible to add `Panel` into the tab.
-####Attention 3: It's possible to add the `tab` into the `Panel`.
+#### Attention 1: you can add any `field` and `relation-field` into the tab. 
+#### Attention 2: it's impossible to add `Panel` into the tab.
+#### Attention 3: It's possible to add the `tab` into the `Panel`.
  
+* base example:
 
 ``` 
     use Armincms\Tab\Tab;    
