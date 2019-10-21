@@ -4,7 +4,7 @@
             class="remove-last-margin-bottom leading-normal py-4 px-8 text-center cursor-pointer font-bold" 
             v-for="tab in tabs"  
             @click.prevent="setActiveTab(tab)"
-            :class="[current == tab.name ? 'border-primary border-b-2 -mb-px' : '', fullwidth ? 'w-full' : '']"
+            :class="[current == tab.name ? 'border-primary border-b-2 -mb-px' : '', fullwidth === true ? 'w-full' : '']"
         >{{ tab.label }}</p> 
     </field-wrapper> 
 </template>
@@ -26,9 +26,11 @@ export default {
             }
         }
     },
-    mounted() { 
-         this.setActiveTab(this.getActiveTab());
-    }, 
+    mounted() {   
+        this.setActiveTab(this.getActiveTab());
+
+        setTimeout(() => {this.setActiveTab(this.getActiveTab())}, 500);  
+    },  
     methods: {
         getActiveTab() { 
             let tab = this.tabs.find(function(tab) {
@@ -42,7 +44,7 @@ export default {
 
             this.$emit('tab-changed', tab) 
             Nova.$emit('tab-changed', tab) 
-        },
-    }
+        }, 
+    } 
 }
 </script> 

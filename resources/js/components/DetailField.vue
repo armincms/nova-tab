@@ -1,5 +1,5 @@
 <template>    
-    <tab-navigator :tabs="field.tabs"  v-on:tab-changed="handleTabChanges" :full-width="field.fullwidth" /> 
+    <tab-navigator :tabs="field.tabs"  v-on:tab-changed="handleTabChanges" :fullwidth="field.fullwidth" /> 
 </template>
 
 <script>
@@ -14,29 +14,29 @@ export default {
         return { 
             components : {
                 type: Array, default: []
-            }
+            } 
         }
     },
     mounted() {    
-        Nova.$on('tab-changed', (tab) => {this.handleTabChanges(tab)})     
-    },   
+        Nova.$on('tab-changed', (tab) => {this.handleTabChanges(tab)})   
+    }, 
     methods: {  
         handleTabChanges(tab) {
-            let last = null;   
-
-            this.walkThroughComponents(function(component) {
+            let last = null;    
+ 
+            this.walkThroughComponents(function(component) { 
                 if(component.field.tabName == tab.name) { 
-                    component.$el.classList.remove('tab-hidden') 
-                    last = component; 
-                } else if(component.field.tabName) { 
-                    component.$el.classList.add('tab-hidden')
-                }
-            }) 
+                    component.$el.classList.remove('tab-hidden'); 
+                    last = component.field.listable ? last : component;
+                } else if(component.field.tabName) {  
+                    component.$el.classList.add('tab-hidden') 
+                } 
+            })   
 
-            last !== null || last.$el.classList.add('remove-bottom-border'); 
+            last == null || last.$el.classList.add('remove-bottom-border'); 
         },  
-        walkThroughComponents(callback) {
-            if(typeof this.components != 'array') {
+        walkThroughComponents(callback) { 
+            if(! this.components.length) {
                 this.components = this.searchComponents(this.$root);
             }  
 
@@ -50,12 +50,12 @@ export default {
                     $components.push(component); 
                 } else if(component.$children.length) { 
                     $components = $components.concat($this.searchComponents(component))
-                } 
+                }  
             });
 
             return $components;
-        }
-    } 
+        }, 
+    }, 
 }
 </script>
 <style> 

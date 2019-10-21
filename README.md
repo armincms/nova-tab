@@ -14,8 +14,44 @@ composer require armincms/nova-tab
 ``` 
  
 ## Usage
-First include `Armincms\Tab\Tab` into resource class. after making a tab; for define tab `field's`,
-  you can use the `group` method.
+First create your tab like follow. Then; for define tab `field's`, you can use the `group` method.
+
+```
+Tab::make('tab-name', function($tab) {
+
+    // pass fields by callback
+    $tab->group('first-tab-name', function($group) {  
+      return [
+
+        // define your tab fields
+
+      ];
+    });
+    
+    // pass fields by array
+    // active your tab by `active` method
+    $tab->group('active-tab', [ 
+
+        // define your tab fields
+
+    ])->active();
+
+    // custom label tab
+    $tab->group('custom-label-tab', function($group) {  
+      // or inside the group
+      $group->label('My Custom Label');
+      
+      return [
+
+        // define your tab fields
+
+      ];
+    })->label('My Custom Label');
+  
+  // full width tab by call `fullwidth` method
+})->fullwidth();
+```
+
 
 ### Ative Tab:
 By default we'll active the first tab. if you want customize the `active tab`, 

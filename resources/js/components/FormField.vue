@@ -1,5 +1,5 @@
 <template>    
-    <tab-navigator :tabs="field.tabs"  v-on:tab-changed="handleTabChanges" :full-width="field.fullwidth" />
+    <tab-navigator :tabs="field.tabs"  v-on:tab-changed="handleTabChanges" :fullwidth="field.fullwidth" />
 </template>
 
 <script>
