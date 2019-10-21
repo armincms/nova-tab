@@ -6,7 +6,7 @@ Field's Grouping by the tab.
 * [Install](#install)  
 * [Usage](#usage)    
 * [Using With Panel](#using-with-panel)    
-* [Relations](#realtions)    
+* [Relations](#relations)    
 
 ## Install
 ```bash
