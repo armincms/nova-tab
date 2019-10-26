@@ -24,12 +24,14 @@ export default {
         handleTabChanges(tab) {
             let last = null;    
  
-            this.walkThroughComponents(function(component) { 
-                if(component.field.tabName == tab.name) { 
-                    component.$el.classList.remove('tab-hidden'); 
-                    last = component.field.listable ? last : component;
-                } else if(component.field.tabName) {  
-                    component.$el.classList.add('tab-hidden') 
+            this.walkThroughComponents(function(component) {  
+                if(component.field.tabName === tab.tab) { 
+                    if(component.field.groupName == tab.name) { 
+                        component.$el.classList.remove('tab-hidden'); 
+                        last = component.field.listable ? last : component;
+                    } else if(component.field.groupName) {  
+                        component.$el.classList.add('tab-hidden') 
+                    }  
                 } 
             })   
 
@@ -45,8 +47,8 @@ export default {
         searchComponents($vue) {
             let  $this = this, $components = [];
 
-            $vue.$children.forEach(function(component) {     
-                if(component.field && component.field.tabGroup === $this.field.name) { 
+            $vue.$children.forEach(function(component) {   
+                if(component.field) { 
                     $components.push(component); 
                 } else if(component.$children.length) { 
                     $components = $components.concat($this.searchComponents(component))

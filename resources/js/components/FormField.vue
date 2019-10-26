@@ -17,15 +17,13 @@ export default {
         handleTabChanges(tab) { 
             let $this = this, last = null;  
 
-            this.$parent.$children.forEach(function(component) {  
-                if(component.field && component.field.tabGroup !== $this.field.name) { 
-                    return;
-                }    
-
-                if(component.field.tabName == tab.name) { 
+            this.$parent.$children.filter(function(component) {
+                return component.field.tabName === tab.tab
+            }).forEach(function(component) {   
+                if(component.field.groupName == tab.name) { 
                     component.$el.classList.remove('tab-hidden') 
                     last = component; 
-                } else if(component.field.tabName) { 
+                } else if(component.field.groupName) { 
                     component.$el.classList.add('tab-hidden')
                 }  
             })  

@@ -121,12 +121,12 @@ class Group
     { 
         if($this->isMetable($field)) {
             $field->withMeta([
-                'tabName' => $this->name, 
-                'tabGroup' => $this->tab
+                'tabName' => $this->tab, 
+                'groupName' => $this->name
             ]);
         } else { 
-            $field->tabName = $this->name;
-            $field->tabGroup = $this->name;
+            $field->tabName = $this->tab;
+            $field->groupName = $this->name;
         }  
 
         return $this;  
@@ -166,8 +166,7 @@ class Group
             'name'  => $this->name,
             'label' => $this->label ?: $this->name,
             'tab'   => $this->tab,
-            'active'=> $this->active,
-            'fields'=> [],
+            'active'=> $this->active, 
         ];
     }
 }

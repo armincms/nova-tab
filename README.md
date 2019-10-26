@@ -5,6 +5,7 @@ Field's Grouping by the tab.
 ##### Table of Contents   
 * [Install](#install)  
 * [Usage](#usage)    
+* [Multiple Tabs](#multiple tabs)    
 * [Using With Panel](#using-with-panel)    
 * [Relations](#relations)    
 
@@ -137,7 +138,66 @@ If you want jsutify the tab for fill screen; you can call `fullWidth` method on 
                 $tab->group('Relations', [
                     MorphToMany::make('Tag'),  
                 ])->label('Relations');  
+            })->fullwidth(),  
+        ]; 
+    }
+```
+
+## Multiple Tabs
+You can add multiple tab into `form` and `detail` page.
+  for this situation; just needs making different name for different tabs.
+
+#### Attention 1: You can't add same` relation-field` in different tabs.it just work with one of them.
+
+```
+
+    use Armincms\Tab\Tab;    
+
+
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function fields(Request $request)
+    {
+        return [       
+            Tab::make('first-tab', function($tab) {
+                $tab->group('general', [
+                    ID::make()->sortable(),  
+
+                    Select::make('Tag')->options(function() {
+                        return ['*' => 'all'];
+                    })->default('*'),     
+                ])->label(__('General')); 
+
+                $tab->group('SEO', [ 
+                    Text::make('Title'), 
+                ])->active();  
+
+                $tab->group('Relations', [
+                    MorphToMany::make('Tag'),  
+                ])->label('Relations');  
             }),  
+            Tab::make('second-tab', function($tab) {
+                $tab->group('general', [
+                    ID::make()->sortable(),  
+
+                    Select::make('Tag')->options(function() {
+                        return ['*' => 'all'];
+                    })->default('*'),     
+                ])->label(__('General')); 
+
+                $tab->group('SEO', [ 
+                    Text::make('Title'), 
+                ])->active();  
+
+                $tab->group('Relations', [
+                    MorphToMany::make('Category'),  
+                ])->label('Relations');  
+            }),    
         ]; 
     }
 ```
@@ -160,7 +220,7 @@ You can add tab into `Panel` but you never can add `Panel` into tab.
     public function fields(Request $request)
     {
         return [     
-            new Panel('My Panel', [  
+            new Panel('First Panel', [  
                 Tab::make('general', function($tab) {
                     $tab->group('general', [
                         ID::make()->sortable(),  
@@ -178,8 +238,7 @@ You can add tab into `Panel` but you never can add `Panel` into tab.
                         MorphToMany::make('Tag'),  
                     ])->label('Relations');  
                 }), 
-            ])   
-        ]; 
+            ]), 
     }
 ```
 
