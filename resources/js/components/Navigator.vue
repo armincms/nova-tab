@@ -35,9 +35,9 @@ export default {
         getActiveTab() { 
             let tab = this.tabs.find(function(tab) {
                 return tab.active; 
-            });
+            }); 
 
-            return tab === null ? this.tabs[0] : tab;
+            return tab ? tab : this.tabs[0];
         },
         setActiveTab(tab) {  
             this.current = tab.name;
