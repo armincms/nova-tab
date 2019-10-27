@@ -45,20 +45,34 @@ class Group
     protected $fields = [];  
 
     /**
-     * Create a new panel instance.
+     * Create a new tab group instance.
      *
      * @param  string    $name
-     * @param  \Closure  $builder
+     * @param  string    $tab
+     * @param  array|\Closure  $fields
      * @return void
      */
     public function __construct($name, $tab, $fields)
     { 
         $this->name = $name; 
         $this->tab = $tab; 
-        $this->fields = is_callable($fields) ? $fields() : $fields; 
+        $this->fields = $this->prepareFields($fields); 
 
         $this->markFields();
     }    
+
+    /**
+     * Preaparing array of fields.
+     * 
+     * @param  array|\Closure $fields
+     * @return array         
+     */
+    public function prepareFields($fields)
+    {
+        $fields = is_callable($fields) ? $fields() : $fields;
+
+        return $fields instanceof MergeValue ? $fields->data : $fields;
+    }
 
     /**
      * Set the label for tab.

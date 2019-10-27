@@ -80,7 +80,19 @@ class Tab extends MergeValue
         $this->data[0]->withMeta(['fullwidth' => true]);
 
         return $this;
-    } 
+    }
+
+    /**
+     * Active tab heading.
+     * 
+     * @return $this             
+     */
+    // public function heading()
+    // {  
+    //     $this->data[0]->withMeta(['heading' => true]);
+
+    //     return $this;
+    // } 
 
     /**
      * Create a new element.
@@ -109,5 +121,15 @@ class Tab extends MergeValue
         }   
  
         $this->{$key} = $value; 
+    }
+
+    /**
+     * Get all of the fields in the array.
+     * 
+     * @return array
+     */
+    public function toArray() : array
+    {
+        return $this->data;
     }
 }

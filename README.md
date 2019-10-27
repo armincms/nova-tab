@@ -5,7 +5,7 @@ Field's Grouping by the tab.
 ##### Table of Contents   
 * [Install](#install)  
 * [Usage](#usage)    
-* [Multiple Tabs](#multiple tabs)    
+* [Multiple Tabs](#multiple-tabs)    
 * [Using With Panel](#using-with-panel)    
 * [Relations](#relations)    
 
@@ -67,7 +67,7 @@ If you want jsutify the tab for fill screen; you can call `fullWidth` method on 
 
 #### Attention 1: you can add any `field` and `relation-field` into the tab. 
 #### Attention 2: it's impossible to add `Panel` into the tab.
-#### Attention 3: It's possible to add the `tab` into the `Panel`.
+#### Attention 3: It's possible to add the `tab` into the `Panel`. 
  
 * base example:
 
@@ -84,25 +84,23 @@ If you want jsutify the tab for fill screen; you can call `fullWidth` method on 
      */
     public function fields(Request $request)
     {
-        return [          
-            Tab::make('general', function($tab) {
-                $tab->group('general', [
-                    ID::make()->sortable(),  
+        return Tab::make('general', function($tab) {
+          $tab->group('general', [
+              ID::make()->sortable(),  
 
-                    Select::make('Tag')->options(function() {
-                        return ['*' => 'all'];
-                    })->default('*'),     
-                ])->label(__('General')); 
+              Select::make('Tag')->options(function() {
+                  return ['*' => 'all'];
+              })->default('*'),     
+          ])->label(__('General')); 
 
-                $tab->group('SEO', [ 
-                    Text::make('Title'), 
-                ])->active();  
+          $tab->group('SEO', [ 
+              Text::make('Title'), 
+          ])->active();  
 
-                $tab->group('Relations', [
-                    MorphToMany::make('Tag'),  
-                ])->label('Relations');  
-            }),  
-        ]; 
+          $tab->group('Relations', [
+              MorphToMany::make('Tag'),  
+          ])->label('Relations');  
+        })->toArray(); 
     }
 ```
 
@@ -121,25 +119,27 @@ If you want jsutify the tab for fill screen; you can call `fullWidth` method on 
      */
     public function fields(Request $request)
     {
-        return [          
-            Tab::make('general', function($tab) {
-                $tab->group('general', [
-                    ID::make()->sortable(),  
+        return Tab::make('general', function($tab) {
+          $tab->group('general', [$this, 'generalFields'])->label(__('General')); 
 
-                    Select::make('Tag')->options(function() {
-                        return ['*' => 'all'];
-                    })->default('*'),     
-                ])->label(__('General')); 
+          $tab->group('SEO', [ 
+              Text::make('Title'), 
+          ])->active();  
 
-                $tab->group('SEO', [ 
-                    Text::make('Title'), 
-                ])->active();  
+          $tab->group('Relations', [
+              MorphToMany::make('Tag'),  
+          ])->label('Relations');  
+        })->fullwidth()->toArray(); 
+    }
 
-                $tab->group('Relations', [
-                    MorphToMany::make('Tag'),  
-                ])->label('Relations');  
-            })->fullwidth(),  
-        ]; 
+    public function generalFields() 
+    {
+      return $this->merge([
+        ID::make()->sortable(),   
+        Select::make('Tag')->options(function() {
+            return ['*' => 'all'];
+        })->default('*'),
+      ]);
     }
 ```
 
@@ -165,13 +165,7 @@ You can add multiple tab into `form` and `detail` page.
     {
         return [       
             Tab::make('first-tab', function($tab) {
-                $tab->group('general', [
-                    ID::make()->sortable(),  
-
-                    Select::make('Tag')->options(function() {
-                        return ['*' => 'all'];
-                    })->default('*'),     
-                ])->label(__('General')); 
+                $tab->group('general', [$this, 'generalFields'])->label(__('General')); 
 
                 $tab->group('SEO', [ 
                     Text::make('Title'), 
@@ -199,6 +193,17 @@ You can add multiple tab into `form` and `detail` page.
                 ])->label('Relations');  
             }),    
         ]; 
+    }
+
+    
+    public function generalFields() 
+    {
+      return $this->merge([
+        ID::make()->sortable(),   
+        Select::make('Tag')->options(function() {
+            return ['*' => 'all'];
+        })->default('*'),
+      ]);
     }
 ```
 
