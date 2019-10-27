@@ -1,3 +1,13 @@
+version 0.3.0 (2019-10-27)
+----------------------------- 
+## ADDED
+	- Added the `toArray` method to the `Tab` class for code simplifying.
+	- Added supporting `MergeValue` for the group's fields appending. 
+		Now you can return `MergeValue` instead of an array in their tab `group` callback. 
+		See the first example. 
+## FIXED
+	- Fixed some documentations.
+
 version 0.2.0 (2019-10-26)
 ----------------------------- 
 ## ADDED
