@@ -1,3 +1,12 @@
+version 0.3.1 (2019-10-31)
+-----------------------------  
+## CHANGED
+	- Changed nad refactored some code styles.
+	
+## FIXED
+	- Fixed supporting of vue `comment` compoent. 
+
+
 version 0.3.0 (2019-10-27)
 ----------------------------- 
 ## ADDED

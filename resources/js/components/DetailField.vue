@@ -1,15 +1,16 @@
 <template>    
-    <tab-navigator :tabs="field.tabs"  v-on:tab-changed="handleTabChanges" :fullwidth="field.fullwidth" /> 
+    <tab-navigator
+        :tabs="field.tabs" 
+        v-on:tab-changed="handleTabChanges"
+        :fullwidth="field.fullwidth" 
+    /> 
 </template>
 
-<script>
-import { FormField } from 'laravel-nova'
+<script> 
+import Tab from './Tab.vue' 
 
 export default {
-    mixins: [FormField], 
-    components: {
-        tabNavigator: require('./Navigator.vue')
-    },  
+    mixins: [Tab], 
     data() {
         return { 
             components : {
@@ -17,41 +18,22 @@ export default {
             } 
         }
     },
-    mounted() {    
-        Nova.$on('tab-changed', (tab) => {this.handleTabChanges(tab)})   
-    }, 
-    methods: {  
-        handleTabChanges(tab) {
-            let last = null;    
- 
-            this.walkThroughComponents(function(component) {  
-                if(component.field.tabName === tab.tab) { 
-                    if(component.field.groupName == tab.name) { 
-                        component.$el.classList.remove('tab-hidden'); 
-                        last = component.field.listable ? last : component;
-                    } else if(component.field.groupName) {  
-                        component.$el.classList.add('tab-hidden') 
-                    }  
-                } 
-            })   
-
-            last == null || last.$el.classList.add('remove-bottom-border'); 
-        },  
+    methods: {   
         walkThroughComponents(callback) { 
             if(! this.components.length) {
-                this.components = this.searchComponents(this.$root);
+                this.components = this.deepSearch(this.$root);
             }  
 
             return this.components.forEach(callback);
         },
-        searchComponents($vue) {
+        deepSearch($vue) {
             let  $this = this, $components = [];
 
             $vue.$children.forEach(function(component) {   
                 if(component.field) { 
                     $components.push(component); 
                 } else if(component.$children.length) { 
-                    $components = $components.concat($this.searchComponents(component))
+                    $components = $components.concat($this.deepSearch(component))
                 }  
             });
 
@@ -59,9 +41,4 @@ export default {
         }, 
     }, 
 }
-</script>
-<style> 
-.tab-hidden {
-    display: none !important;
-}  
-</style>
+</script> 
