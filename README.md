@@ -21,12 +21,12 @@ First create your tab like follow.
 
 ```
 Tab::make('tab-name', [
-  'first-tab-name' => 'First Tab Label',
-  'second-tab-name' => 'Second Tab Label',
-  'fourth-tab' => [
+  'first-group-name' => 'First Tab Label',
+  'second-group-name' => 'Second Tab Label',
+  'fourth-group' => [
     // group fields
   ],
-  'fifth-tab' => function() {
+  'fifth-group' => function() {
     return [
       // group fields
     ];
@@ -37,8 +37,8 @@ Then, to insert each field into the created tab; pass the `name` and the `group 
   into the `withTab` macro method.for example:
 
 ```
-  Text::make('Name')->withTab('tab-name', 'first-tab-name');
-  Text::make('Gender')->withTab('tab-name', 'second-tab-name');
+  Text::make('Name')->withTab('tab-name', 'first-group-name');
+  Text::make('Gender')->withTab('tab-name', 'second-group-name');
 ```
 
 ## Usage
