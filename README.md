@@ -9,6 +9,7 @@ Field's Grouping by the tab.
 * [Multiple Tabs](#multiple-tabs)    
 * [Using With Panel](#using-with-panel)    
 * [Relations](#relations)    
+* [Missed Tabs](#missed-tabs)    
 
 ## Install
 ```bash
@@ -307,4 +308,15 @@ You can add tab into `Panel` but you never can add `Panel` into tab.
             ])   
         ]; 
     }
+```
+
+
+## Missed Tabs
+
+If some fields missing in the tab, with macro method `withTab` you can add the 
+  missed field into the tab. like following example:
+
+```
+  Text::make('FieldName')->withTab('tab-name', 'group-name')
+
 ```
