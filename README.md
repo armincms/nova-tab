@@ -21,8 +21,8 @@ First create your tab like follow.
 
 ```
 Tab::make('tab-name', [
-  'first-group-name' => 'First Tab Label',
-  'second-group-name' => 'Second Tab Label',
+  'first-group-name' => 'First Group Label',
+  'second-group-name' => 'Second Group Label',
   'fourth-group' => [
     // group fields
   ],
