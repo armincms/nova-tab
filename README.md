@@ -4,7 +4,8 @@ Field's Grouping by the tab.
 
 ##### Table of Contents   
 * [Install](#install)  
-* [Usage](#usage)    
+* [Quick Start](#quick start)    
+* [Usage](#quick usage)    
 * [Multiple Tabs](#multiple-tabs)    
 * [Using With Panel](#using-with-panel)    
 * [Relations](#relations)    
@@ -14,6 +15,32 @@ Field's Grouping by the tab.
 composer require armincms/nova-tab
 ``` 
  
+## Quick Start 
+First create your tab like follow. 
+
+
+```
+Tab::make('tab-name', [
+  'first-tab-name' => 'First Tab Label',
+  'second-tab-name' => 'Second Tab Label',
+  'fourth-tab' => [
+    // group fields
+  ],
+  'fifth-tab' => function() {
+    return [
+      // group fields
+    ];
+  }
+])->fullwidth();
+```
+Then, to insert each field into the created tab; pass the `name` and the `group name` 
+  into the `withTab` macro method.for example:
+
+```
+  Text::make('Name')->withTab('tab-name', 'first-tab-name');
+  Text::make('Gender')->withTab('tab-name', 'second-tab-name');
+```
+
 ## Usage
 First create your tab like follow. Then; for define tab `field's`, you can use the `group` method.
 

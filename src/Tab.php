@@ -12,11 +12,11 @@ class Tab extends MergeValue
     use Metable; 
 
     /**
-     * List of availabel tabs.
+     * List of availabel groups.
      * 
      * @var array
      */
-    protected $tabs = [];  
+    protected $groups = [];  
 
     /**
      * The data to be merged.
@@ -29,17 +29,53 @@ class Tab extends MergeValue
      * Create a new panel instance.
      *
      * @param  string    $name
-     * @param  \Closure  $builder
+     * @param  array|\Closure  $builder
      * @return void
      */
-    public function __construct($name, Closure $builder)
+    public function __construct($name, $builder)
     { 
         $this->name = $name;  
 
-        $builder($this);    
+        is_array($builder) ? $this->arrayBuilder($builder) : $builder($this);    
 
         array_unshift($this->data, $this->getNavigator());
-    }  
+    } 
+
+    /**
+     * Build tab groups by array.
+     * 
+     * @param  array  $builder 
+     * @return $this
+     */
+    protected function arrayBuilder(array $builder)
+    {
+        array_walk($builder, function($label, $name) { 
+            if(! $this->isCallableOrArray($label)) { 
+                $name = is_numeric($name) ? $label : $name;
+                $builder = [];
+            } else {
+                $builder = $label;
+                $label = $name;
+            }
+
+            $group = $this->group($name, $builder);
+
+            $name === $label || $group->label($label);
+        });
+
+        return $this;
+    } 
+
+    /**
+     * Detect if builder is array or is callable.
+     * 
+     * @param  array|callable $builder 
+     * @return boolean          
+     */
+    protected function isCallableOrArray($builder)
+    {
+        return is_callable($builder) || is_array($builder);
+    }
 
     /**
      * Tab's navigator field.
@@ -52,7 +88,7 @@ class Tab extends MergeValue
             return $tab->JsonSerialize();
         }; 
 
-        return TabNavigator::make($this->name, array_map($callback, $this->tabs)); 
+        return TabNavigator::make($this->name, array_map($callback, $this->gorups)); 
     } 
 
     /**
@@ -62,11 +98,11 @@ class Tab extends MergeValue
      * @param  array|\Closure  $fields
      * @return void
      */
-    public function group(string $name, $fields)
+    public function group(string $name, $fields = [])
     {   
-        return tap(new Group($name, $this->name, $fields), function($tab) {
-            $this->data = array_merge((array) $this->data, $tab->fields());
-            $this->tabs[] = $tab; 
+        return tap(new Group($name, $this->name, $fields), function($group) {
+            $this->data = array_merge((array) $this->data, $group->fields());
+            $this->gorups[] = $group; 
         }); 
     }
 
