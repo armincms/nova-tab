@@ -1,3 +1,11 @@
+version 0.4.0 (2019-11-16)
+-----------------------------  
+## CHANGED
+	- Some refactoring. 
+## ADDED
+	- Added macro `withTab` into fields for missed tabs. 
+
+
 version 0.3.1 (2019-10-31)
 -----------------------------  
 ## CHANGED
