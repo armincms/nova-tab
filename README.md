@@ -4,8 +4,8 @@ Field's Grouping by the tab.
 
 ##### Table of Contents   
 * [Install](#install)  
-* [Quick Start](#quick start)    
-* [Usage](#quick usage)    
+* [Quick Start](#quick-start)    
+* [Usage](#quick-usage)    
 * [Multiple Tabs](#multiple-tabs)    
 * [Using With Panel](#using-with-panel)    
 * [Relations](#relations)    
