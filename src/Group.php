@@ -104,21 +104,23 @@ class Group
      */
     public function markFields()
     {
-        return $this->wlakThroughFields([$this, 'markField']); 
+        return $this->wlakThroughFields([$this, 'markField'], $this->fields); 
     }
 
     /**
-     * Wlakin through field's.
+     * Run a `callback` on all possible fields.
      * 
      * @param  callable $callback 
      * @return $this             
      */
-    public function wlakThroughFields(callable $callback)
+    public function wlakThroughFields(callable $callback, array $fields)
     {
-        array_walk($this->fields, function($field) use ($callback) {
-            $fields = $field instanceof MergeValue ? array_merge($field->data, [$field]) : [$field];
+        array_walk($fields, function($field) use ($callback) {
+            if($field instanceof MergeValue) {
+                $this->wlakThroughFields($callback, $this->prepareFields($field));
+            }
 
-            array_walk($fields, $callback);
+            $callback($field);
         });
 
         return $this;  
