@@ -88,7 +88,7 @@ class Tab extends MergeValue
             return $tab->JsonSerialize();
         }; 
 
-        return TabNavigator::make($this->name, array_map($callback, $this->gorups)); 
+        return TabNavigator::make($this->name, array_map($callback, $this->groups)); 
     } 
 
     /**
@@ -102,7 +102,7 @@ class Tab extends MergeValue
     {   
         return tap(new Group($name, $this->name, $fields), function($group) {
             $this->data = array_merge((array) $this->data, $group->fields());
-            $this->gorups[] = $group; 
+            $this->groups[] = $group; 
         }); 
     }
 
